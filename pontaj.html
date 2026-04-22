@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<link rel="icon" type="image/png" href="logo.png">
+<meta charset="UTF-8">
+<title>Pontaj Activitate</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+/* BACKGROUND + BASE */
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #020617;
+    color: white;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 20% 20%, #0ea5e9 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, #6366f1 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, #22c55e 0%, transparent 40%);
+    opacity: 0.4;
+    filter: blur(100px);
+}
+
+/* LAYOUT */
+.container {
+    max-width: 1400px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+}
+
+/* GLASS */
+.glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* SIDEBAR */
+.sidebar {
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.nav-link {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #94a3b8;
+}
+
+.nav-link:hover { background: rgba(255,255,255,0.05); color: white; }
+.nav-link.active { background: #2563eb; color: white; }
+
+/* MAIN */
+.main {
+    padding: 25px;
+    border-radius: 20px;
+}
+
+/* FORM */
+.post-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.post-form input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.4);
+    color: white;
+}
+
+.post-form button {
+    background: #2563eb;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+}
+
+/* POST */
+.post {
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.badge {
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 6px;
+    background: #1e293b;
+}
+
+.time {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+h1 { margin-top: 0; }
+a { color: #38bdf8; }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar glass">
+
+<a href="index.html" class="nav-link">
+<i class="fa-solid fa-house"></i> Dashboard
+</a>
+
+<a href="pontaj.html" class="nav-link active">
+<i class="fa-solid fa-computer"></i> Pontaj
+</a>
+
+</div>
+
+<!-- MAIN -->
+<div class="main glass">
+
+<h1>Pontaj - Activitate</h1>
+
+<div class="post-form">
+    <input type="text" id="politist" placeholder="Nume + Grad">
+    <input type="text" id="interval" placeholder="Ora început - Ora sfârșit">
+    <input type="text" id="activitate" placeholder="Ce ai făcut">
+    <button onclick="adaugaPost()">Salvează</button>
+</div>
+
+<div id="postari"></div>
+
+</div>
+</div>
+
+<script>
+
+/* LOAD la start */
+window.onload = function() {
+    const data = JSON.parse(localStorage.getItem("mdt_posts") || "[]");
+    data.forEach(renderPost);
+}
+
+/* ADD POST */
+function adaugaPost() {
+
+    let politist = document.getElementById("politist").value;
+    let interval = document.getElementById("interval").value;
+    let activitate = document.getElementById("activitate").value;
+
+    if (!politist || !interval || !activitate) {
+        alert("Completează toate câmpurile!");
+        return;
+    }
+
+    let post = {
+        politist,
+        interval,
+        activitate,
+        data: new Date().toLocaleString()
+    };
+
+    let saved = JSON.parse(localStorage.getItem("mdt_posts") || "[]");
+    saved.unshift(post);
+    localStorage.setItem("mdt_posts", JSON.stringify(saved));
+
+    renderPost(post);
+
+    document.getElementById("politist").value = "";
+    document.getElementById("interval").value = "";
+    document.getElementById("activitate").value = "";
+}
+
+/* RENDER */
+function renderPost(p) {
+
+    let html = `
+    <div class="post">
+        <div class="post-header">
+            <div>
+                <b>${p.politist}</b><br>
+                <span class="badge">Pontaj</span>
+            </div>
+            <div class="time">${p.data}</div>
+        </div>
+
+        <div>
+            <b>Interval:</b> ${p.interval}<br>
+            <b>Activitate:</b> ${p.activitate}
+        </div>
+    </div>
+    `;
+
+    document.getElementById("postari").innerHTML += html;
+}
+
+</script>
+
+</body>
+</html>

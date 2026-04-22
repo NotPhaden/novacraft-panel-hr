@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<link rel="icon" type="image/png" href="logo.png">
+<meta charset="UTF-8">
+<title>Cereri Concedii</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #020617;
+    color: white;
+}
+
+/* BACKGROUND */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+
+    background:
+        radial-gradient(circle at 20% 20%, #0ea5e9 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, #6366f1 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, #22c55e 0%, transparent 40%);
+
+    opacity: 0.4;
+    filter: blur(100px);
+}
+
+/* LAYOUT */
+.container {
+    max-width: 1400px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+}
+
+/* GLASS */
+.glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+}
+
+/* SIDEBAR */
+.sidebar {
+    padding: 20px;
+}
+
+.nav-title {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: 0.2s;
+}
+
+.nav-btn:hover {
+    background: rgba(255,255,255,0.05);
+    color: white;
+}
+
+.nav-btn.active {
+    background: #2563eb;
+    color: white;
+}
+
+/* MAIN */
+.main {
+    padding: 25px;
+}
+
+/* GRID */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(2,6,23,0.6);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* FORM */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.3);
+    color: white;
+    outline: none;
+}
+
+textarea {
+    min-height: 100px;
+    resize: none;
+}
+
+button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+    background: #2563eb;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+/* LIST */
+.leave-item {
+    padding: 12px;
+    border-left: 3px solid #38bdf8;
+    margin-bottom: 10px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+}
+
+.small {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 3px 6px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.08);
+    color: #38bdf8;
+    margin-bottom: 10px;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+<div class="sidebar glass">
+
+<div class="nav-title">PHANTOM SYSTEM</div>
+
+<div class="nav-btn active" onclick="show('form', this)">
+<i class="fa-solid fa-file"></i>
+<div>Cerere Concediu</div>
+</div>
+
+<div class="nav-btn" onclick="show('list', this)">
+<i class="fa-solid fa-users"></i>
+<div>Lista Concedii </div>
+</div>
+
+<br>
+<a href="index.html" style="color:#94a3b8;text-decoration:none;">← Înapoi</a>
+
+</div>
+
+<!-- MAIN -->
+<div class="main glass">
+
+<div class="grid">
+
+<!-- FORM -->
+<div id="form" class="section active card">
+
+<span class="tag">FORMULAR</span>
+
+<label>Nume</label>
+<input id="nume" placeholder="Nume complet">
+
+<label>Grad</label>
+<input id="grad" placeholder="Grad / Funcție">
+
+<label>Data început</label>
+<input type="date" id="start">
+
+<label>Data sfârșit</label>
+<input type="date" id="end">
+
+<label>Motiv</label>
+<textarea id="motiv" placeholder="Motiv concediu..."></textarea>
+
+<button onclick="submitLeave()">Trimite cererea</button>
+
+</div>
+
+<!-- LIST -->
+<div id="list" class="section card">
+
+<span class="tag">ACTIVE</span>
+
+<div id="leaveList"></div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function show(id, el){
+    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    el.classList.add("active");
+}
+
+// SALVARE CERERE
+function submitLeave(){
+
+    const nume = document.getElementById("nume").value;
+    const grad = document.getElementById("grad").value;
+    const start = document.getElementById("start").value;
+    const end = document.getElementById("end").value;
+    const motiv = document.getElementById("motiv").value;
+
+    if(!nume || !grad || !start || !end){
+        alert("Completează toate câmpurile!");
+        return;
+    }
+
+    let leaves = JSON.parse(localStorage.getItem("leaves") || "[]");
+
+    leaves.push({
+        nume,
+        grad,
+        start,
+        end,
+        motiv
+    });
+
+    localStorage.setItem("leaves", JSON.stringify(leaves));
+
+    renderLeaves();
+
+    alert("Cerere trimisă!");
+
+    document.getElementById("nume").value = "";
+    document.getElementById("grad").value = "";
+    document.getElementById("start").value = "";
+    document.getElementById("end").value = "";
+    document.getElementById("motiv").value = "";
+}
+
+// AFIȘARE LISTĂ
+function renderLeaves(){
+
+    let leaves = JSON.parse(localStorage.getItem("leaves") || "[]");
+
+    const container = document.getElementById("leaveList");
+    container.innerHTML = "";
+
+    if(leaves.length === 0){
+        container.innerHTML = `<div class="small">Nu există cereri active.</div>`;
+        return;
+    }
+
+    leaves.forEach(l => {
+        const div = document.createElement("div");
+        div.className = "leave-item";
+
+        div.innerHTML = `
+            <b>${l.nume}</b>
+            <div class="small">${l.grad} • ${l.start} → ${l.end}</div>
+            <div class="small">Motiv: ${l.motiv}</div>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+// load la pornire
+renderLeaves();
+
+</script>
+
+</body>
+</html>
