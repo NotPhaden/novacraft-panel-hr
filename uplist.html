@@ -1,0 +1,188 @@
+<head>
+<link rel="icon" type="image/png" href="logo.png">
+<meta charset="UTF-8">
+<title>Lista UP-uri</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #020617;
+    color: white;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 20% 20%, #0ea5e9 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, #6366f1 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, #22c55e 0%, transparent 40%);
+    opacity: 0.4;
+    filter: blur(100px);
+}
+
+.container {
+    max-width: 1400px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+}
+
+.glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar {
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.nav-link {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #94a3b8;
+    margin-bottom: 6px;
+    transition: 0.2s;
+}
+
+.nav-link:hover {
+    background: rgba(255,255,255,0.05);
+    color: white;
+}
+
+.nav-link.active {
+    background: #2563eb;
+    color: white;
+}
+
+.main {
+    padding: 25px;
+    border-radius: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.card {
+    padding: 15px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(30,58,138,0.4), rgba(16,185,129,0.25));
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: 0.2s;
+}
+
+.card:hover {
+    border-color: #38bdf8;
+    transform: translateY(-3px);
+}
+
+.code {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.desc {
+    font-size: 14px;
+    color: #cbd5f5;
+    margin-top: 5px;
+}
+
+.tag {
+    float: right;
+    font-size: 10px;
+    padding: 4px 6px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.08);
+    color: #38bdf8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="sidebar glass">
+
+<a href="index.html" class="nav-link">
+<i class="fa-solid fa-house"></i> Dashboard
+</a>
+
+<a href="pontaj.html" class="nav-link">
+<i class="fa-solid fa-computer"></i> Pontaj
+</a>
+
+<a href="uplist.html" class="nav-link active">
+<i class="fa-solid fa-arrow-up"></i> UP List
+</a>
+
+</div>
+
+<div class="main glass">
+
+<h1>Lista UP-uri</h1>
+
+<div class="grid">
+
+<div class="card">
+<span class="tag">UP</span>
+<div class="code">Jucător X</div>
+<div class="desc">
+Din: Admin<br>
+În: Operator<br>
+Data: 22.04.2026
+</div>
+</div>
+
+<div class="card">
+<span class="tag">UP</span>
+<div class="code">Jucător Y</div>
+<div class="desc">
+Din: Moderator<br>
+În: Admin<br>
+Data: 21.04.2026
+</div>
+</div>
+
+<div class="card">
+<span class="tag">UP</span>
+<div class="code">Jucător Z</div>
+<div class="desc">
+Din: Helper în teste<br>
+În: Helper<br>
+Data: 20.04.2026
+</div>
+</div>
+
+<div class="card">
+<span class="tag">UP</span>
+<div class="code">Jucător A</div>
+<div class="desc">
+Din: Helper<br>
+În: Moderator<br>
+Data: 19.04.2026
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</body>
