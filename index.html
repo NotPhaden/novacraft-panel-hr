@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="ro">
 <head>
 <link rel="icon" type="image/png" href="logo.png">
 <meta charset="UTF-8">
@@ -9,7 +7,6 @@
 
 <style>
 
-/* BASE */
 body {
     margin: 0;
     font-family: Arial;
@@ -17,7 +14,6 @@ body {
     color: white;
 }
 
-/* BACKGROUND */
 body::before {
     content: "";
     position: fixed;
@@ -33,7 +29,6 @@ body::before {
     filter: blur(100px);
 }
 
-/* LAYOUT */
 .container {
     max-width: 1400px;
     margin: 40px auto;
@@ -42,20 +37,17 @@ body::before {
     gap: 20px;
 }
 
-/* GLASS */
 .glass {
     background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255,255,255,0.08);
 }
 
-/* SIDEBAR */
 .sidebar {
     padding: 20px;
     border-radius: 20px;
 }
 
-/* NAV */
 .nav-title {
     font-size: 12px;
     letter-spacing: 2px;
@@ -90,13 +82,11 @@ body::before {
     opacity: 0.7;
 }
 
-/* MAIN */
 .main {
     padding: 25px;
     border-radius: 20px;
 }
 
-/* HEADER */
 .header {
     margin-bottom: 25px;
 }
@@ -105,14 +95,12 @@ body::before {
     margin: 0;
 }
 
-/* GRID */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
 }
 
-/* CARD */
 .card {
     padding: 20px;
     border-radius: 14px;
@@ -150,7 +138,6 @@ body::before {
 
 <div class="container">
 
-<!-- SIDEBAR -->
 <div class="sidebar glass">
 
 <div class="nav-title">PHANTOM SYSTEM</div>
@@ -183,7 +170,6 @@ body::before {
 
 </div>
 
-<!-- MAIN -->
 <div class="main glass">
 
 <div class="header">
@@ -214,4 +200,3 @@ body::before {
 </div>
 
 </body>
-</html>
